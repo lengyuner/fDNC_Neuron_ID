@@ -68,6 +68,8 @@ class neuron_data_pytorch(Dataset):
         """
         if self.mode == 'all':
             self.folders = glob.glob(os.path.join(path, '*/'))
+        elif self.mode == 'NP_corp':
+            self.folders = glob.glob(os.path.join(path, '*/*/'))
         elif self.mode == 'real':
             self.folders = glob.glob(os.path.join(path, 'real_*/'))
         elif self.mode == 'syn':

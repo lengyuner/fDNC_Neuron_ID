@@ -44,6 +44,9 @@ def evaluate_ppl(model, dev_data_loader):
 
 
 if __name__ == "__main__":
+
+    #python ./src/fDNC_train.py --train_path ./Data/synth_new_train --eval_path ./Data/synth_new_val --data_mode NP_corp
+
     # train the model.
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch_size", default=64, type=int)
