@@ -75,14 +75,14 @@ class neuron_data_pytorch(Dataset):
         :return:
         """
         
-        import pandas as pd
-        name =r"C:\Users\jd\Desktop\tr_te_val_splits.csv"
-        name = "/scratch/jd4587/fDNC_Daniel/tr_te_val_splits.csv"
-        tr_te_val_splits_df = pd.read_csv(name)
-        # Separate data into train, validation, and test sets
-        train_files = tr_te_val_splits_df[tr_te_val_splits_df['Group'] == 'train']['Filename'].tolist()
-        validation_files = tr_te_val_splits_df[tr_te_val_splits_df['Group'] == 'validation']['Filename'].tolist()
-        test_files = tr_te_val_splits_df[tr_te_val_splits_df['Group'] == 'test']['Filename'].tolist()
+        # # import pandas as pd
+        # name =r"C:\Users\jd\Desktop\tr_te_val_splits.csv"
+        # name = "/scratch/jd4587/fDNC_Daniel/tr_te_val_splits.csv"
+        # tr_te_val_splits_df = pd.read_csv(name)
+        # # Separate data into train, validation, and test sets
+        # train_files = tr_te_val_splits_df[tr_te_val_splits_df['Group'] == 'train']['Filename'].tolist()
+        # validation_files = tr_te_val_splits_df[tr_te_val_splits_df['Group'] == 'validation']['Filename'].tolist()
+        # test_files = tr_te_val_splits_df[tr_te_val_splits_df['Group'] == 'test']['Filename'].tolist()
 
         if self.mode== 'all':
             self.folders = glob.glob(os.path.join(path, '*/'))
@@ -119,8 +119,8 @@ class neuron_data_pytorch(Dataset):
             elif self.mode == 'NP_corp':
                 volume_list = glob.glob1(folder, '*.npy')
 
-            # print(volume_list)
-            volume_list = []
+            # # print(volume_list)
+            # volume_list = []
 
             num_volume = len(volume_list)
             num_data += num_volume
