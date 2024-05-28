@@ -84,7 +84,9 @@ if __name__ == "__main__":
     print('data mode:{}\n'.format(args.data_mode))
     cuda = args.cuda
 
-    # loading the data
+    # # loading the data
+    # train_data = neuron_data_pytorch(args.train_path, batch_sz=args.batch_size, shuffle=True, rotate=True, mode=args.data_mode,task='train')
+    # dev_data = neuron_data_pytorch(args.eval_path, batch_sz=args.batch_size, shuffle=False, rotate=True, mode=args.data_mode,task='val')
     train_data = neuron_data_pytorch(args.train_path, batch_sz=args.batch_size, shuffle=True, rotate=True, mode=args.data_mode)
     dev_data = neuron_data_pytorch(args.eval_path, batch_sz=args.batch_size, shuffle=False, rotate=True, mode=args.data_mode)
 

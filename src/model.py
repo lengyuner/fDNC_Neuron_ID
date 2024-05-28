@@ -50,6 +50,14 @@ class neuron_data_pytorch(Dataset):
         self.show_name = show_name
         self.shuffle_pt = shuffle_pt
 
+        # if 'train' in path:
+        #     self.task =='train'
+        # elif 'val' in path:
+        #     self.task =='val'
+        # elif 'test' in path:
+        #     self.task =='test'
+        # self.task == task
+
         # set the temp_plate
         if tmp_path is not None:
             # set the ref_idx to 0
@@ -66,7 +74,17 @@ class neuron_data_pytorch(Dataset):
         :param batch_sz: batch size
         :return:
         """
-        if self.mode == 'all':
+        
+        import pandas as pd
+        name =r"C:\Users\jd\Desktop\tr_te_val_splits.csv"
+        name = "/scratch/jd4587/fDNC_Daniel/tr_te_val_splits.csv"
+        tr_te_val_splits_df = pd.read_csv(name)
+        # Separate data into train, validation, and test sets
+        train_files = tr_te_val_splits_df[tr_te_val_splits_df['Group'] == 'train']['Filename'].tolist()
+        validation_files = tr_te_val_splits_df[tr_te_val_splits_df['Group'] == 'validation']['Filename'].tolist()
+        test_files = tr_te_val_splits_df[tr_te_val_splits_df['Group'] == 'test']['Filename'].tolist()
+
+        if self.mode== 'all':
             self.folders = glob.glob(os.path.join(path, '*/'))
         elif self.mode == 'NP_corp':
             self.folders = glob.glob(os.path.join(path, '*/*/'))
@@ -75,6 +93,17 @@ class neuron_data_pytorch(Dataset):
         elif self.mode == 'syn':
             self.folders = glob.glob(os.path.join(path, 'syn_*/'))
 
+        
+        # if path.endswith('train') :
+        #     self.task =='train'
+        # elif path.endswith('val'):
+        #     self.task =='val'
+        # elif path.endswith('test'):
+        #     self.task =='test' 
+
+        # self.folders = [fold for fold in self.folders if fold.split('\\')[-3] in tvt_files]
+
+        # print(self.folders)
         # files in each folder is a list
         all_files = list()
         bundle_list = list()
@@ -87,6 +116,11 @@ class neuron_data_pytorch(Dataset):
                 volume_list = glob.glob1(folder, 'real_*.npy')
             elif self.mode == 'syn':
                 volume_list = glob.glob1(folder, 'syn_*.npy')
+            elif self.mode == 'NP_corp':
+                volume_list = glob.glob1(folder, '*.npy')
+
+            # print(volume_list)
+            volume_list = []
 
             num_volume = len(volume_list)
             num_data += num_volume
