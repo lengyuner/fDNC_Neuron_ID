@@ -1,3 +1,6 @@
+'''
+    python .\src\fDNC_eval.py --model_path "./model/632/18/nitReg_nh128_nl6_ft1_dataNP_corp_elam_0.1_632.bin" --eval_path "./Data/Data/test_neuropal_Chaudhary" --n_hidden 128 --n_layer 6 --p_rotate 1 --f_trans 1 
+'''
 from scipy.optimize import linear_sum_assignment
 import torch
 import argparse
@@ -95,7 +98,7 @@ if __name__ == "__main__":
                         default="../model/model.bin",
                         type=str)
 
-    parser.add_argument("--eval_path", default="../Data/test_neuropal_our", type=str) # the path to test data.
+    parser.add_argument("--eval_path", default="../Data/Data/test_neuropal_our", type=str) # the path to test data.
     parser.add_argument("--save", default=0, type=int)
     parser.add_argument("--save_p", default="../results", type=str)
     parser.add_argument("--cuda", default=1, type=int)
@@ -111,6 +114,8 @@ if __name__ == "__main__":
     parser.add_argument("--conf_thd", default=0.00, type=float)
     parser.add_argument("--tmp_p", default="no", type=str)
     parser.add_argument("--n_outlier", default=5, type=int)
+    parser.add_argument("--p_rotate", default=0, type=int)
+    parser.add_argument("--f_trans", default=0, type=int)
 
     args = parser.parse_args()
 
@@ -132,7 +137,10 @@ if __name__ == "__main__":
             print("{}:{}")
 
     # load model
-    model = NIT_Registration(input_dim=3, n_hidden=args.n_hidden, cuda=args.cuda, n_layer=args.n_layer, p_rotate=0, feat_trans=0)
+    # model = NIT_Registration(input_dim=3, n_hidden=args.n_hidden, cuda=args.cuda, n_layer=args.n_layer, p_rotate=0, feat_trans=0)
+    model = NIT_Registration(input_dim=3, n_hidden=args.n_hidden, cuda=args.cuda, n_layer=args.n_layer,
+                             p_rotate=args.p_rotate, feat_trans=args.f_trans)
+
     device = torch.device("cuda:0" if args.cuda else "cpu")
 
     params = torch.load(args.model_path, map_location=lambda storage, loc: storage)
